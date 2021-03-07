@@ -1,5 +1,5 @@
 # Algorithmic Aesthetics recoding project
-Based on Computer Composition With Lines by A. Michael Noll.
+Based on *Computer Composition With Lines* by A. Michael Noll.
 
 
 ## Pseudo-code
