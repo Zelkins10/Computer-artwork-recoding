@@ -9,29 +9,22 @@ var params = {
 };
 gui.add(params, "radius", 0, 200, 1);
 gui.add(params, "rectThickness", 1, 10, 1);
-gui.add(params, "Download_Image");
 gui.add(params, "maxLength", 1, 20, 1);
 gui.add(params, "rectMargin", 1, 10, 1);
-function isEven(value) {
-    if (value % 2 == 0)
-        return true;
-    else
-        return false;
-}
+gui.add(params, "Download_Image");
 function draw() {
     background('white');
     noStroke();
     fill('black');
-    var compteur = 0;
-    randomSeed(compteur);
-    for (var x = 0; x < width / 2; x++) {
-        for (var y = 0; y < height / 2; y++) {
+    var compteur1 = 0;
+    randomSeed(compteur1);
+    for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin + 1) {
+        for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin + 1) {
             var valeurAlea = 0;
-            var testParite = Math.floor(random(1, 3));
-            if ((x - width / 4) * (x - width / 4) + (y - height / 4) * (y - height / 4) <= params.radius * params.radius) {
-                if ((x - width / 4) * (x - width / 4) + (y - height / 4 + params.radius) * (y - height / 4 + params.radius) <= (params.radius * params.radius)) {
+            if (sq(x - width / 4) + sq(y - height / 4) <= sq(params.radius)) {
+                if (sq(x - width / 4) + sq(y - height / 4 + params.radius) <= sq(params.radius)) {
                     valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
-                    if (isEven(testParite)) {
+                    if (random() < 0.5) {
                         rect(x, y, valeurAlea, params.rectThickness);
                     }
                     else {
@@ -40,7 +33,7 @@ function draw() {
                 }
                 else {
                     valeurAlea = random(params.minLength, params.maxLength);
-                    if (isEven(testParite)) {
+                    if (random() < 0.5) {
                         rect(x, y, valeurAlea, params.rectThickness);
                     }
                     else {
@@ -48,10 +41,8 @@ function draw() {
                     }
                 }
             }
-            y = y + params.rectThickness + params.rectMargin;
-            compteur++;
+            compteur1++;
         }
-        x = x + params.rectThickness + params.rectMargin;
     }
 }
 function setup() {
