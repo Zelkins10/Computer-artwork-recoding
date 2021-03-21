@@ -8,6 +8,7 @@ var params = {
     shift: 1.5,
     randomSeed: 1,
     randomMode_1classic_2gaussian: 1,
+    darkMode: 0,
     Download_Image: function () { return save(); },
 };
 gui.add(params, "randomMode_1classic_2gaussian", 1, 2, 1);
@@ -18,11 +19,19 @@ gui.add(params, "maxLength", 1, 20, 1);
 gui.add(params, "rectMargin", 1, 10, 1);
 gui.add(params, "shift", 0.5, 10, 0.5);
 gui.add(params, "randomSeed", 1, 100, 1);
+gui.add(params, "darkMode", 0, 1, 1);
 gui.add(params, "Download_Image");
 function draw() {
-    background('white');
-    noStroke();
-    fill('black');
+    if (params.darkMode == 0) {
+        background('white');
+        noStroke();
+        fill('black');
+    }
+    else {
+        background(24, 26, 27);
+        noStroke();
+        fill('white');
+    }
     randomSeed(params.randomSeed);
     if (params.randomMode_1classic_2gaussian == 1) {
         var compteur1 = 0;
