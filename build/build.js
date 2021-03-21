@@ -21,6 +21,12 @@ gui.add(params, "shift", 0.5, 10, 0.5);
 gui.add(params, "randomSeed", 1, 100, 1);
 gui.add(params, "darkMode", 0, 1, 1);
 gui.add(params, "Download_Image");
+function randomSpecial(incertitude) {
+    if (params.randomMode_1classic_2gaussian == 1) {
+        return random(-incertitude, incertitude);
+    }
+    return randomGaussian(-incertitude, incertitude);
+}
 function draw() {
     if (params.darkMode == 0) {
         background('white');
