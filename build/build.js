@@ -7,8 +7,10 @@ var params = {
     rectMargin: 4,
     shift: 1.5,
     randomSeed: 1,
+    randomMode_1classic_2gaussian: 1,
     Download_Image: function () { return save(); },
 };
+gui.add(params, "randomMode_1classic_2gaussian", 1, 2, 1);
 gui.add(params, "radius", 0, 200, 1);
 gui.add(params, "rectThickness", 1, 10, 1);
 gui.add(params, "minLength", 1, 20, 1);
@@ -22,115 +24,230 @@ function draw() {
     noStroke();
     fill('black');
     randomSeed(params.randomSeed);
-    var compteur1 = 0;
-    for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
-        for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin) {
-            var valeurAlea = 0;
-            if (sq(x - width / 4) + sq(y - height / 4) <= sq(params.radius)) {
-                if (sq(x - width / 4) + sq(y - height / 4 + params.radius) <= sq(params.radius)) {
-                    valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
-                    if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x, y, valeurAlea, params.rectThickness);
+    if (params.randomMode_1classic_2gaussian == 1) {
+        var compteur1 = 0;
+        for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
+            for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                if (sq(x - width / 4) + sq(y - height / 4) <= sq(params.radius)) {
+                    if (sq(x - width / 4) + sq(y - height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x, y, valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x, y, params.rectThickness, valeurAlea);
+                        }
                     }
                     else {
-                        rect(x, y, params.rectThickness, valeurAlea);
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x, y, valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x, y, params.rectThickness, valeurAlea);
+                        }
                     }
                 }
-                else {
-                    valeurAlea = random(params.minLength, params.maxLength);
-                    if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x, y, valeurAlea, params.rectThickness);
-                    }
-                    else {
-                        rect(x, y, params.rectThickness, valeurAlea);
-                    }
-                }
+                compteur1++;
             }
-            compteur1++;
+        }
+        var compteur2 = 0;
+        for (var x = width / 2; x < width; x += params.rectThickness + params.rectMargin) {
+            for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                var incertitude = params.shift;
+                if (sq(x - 3 * width / 4) + sq(y - height / 4) <= sq(params.radius)) {
+                    if (sq(x - 3 * width / 4) + sq(y - height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                    else {
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                }
+                compteur2++;
+            }
+        }
+        var compteur3 = 0;
+        for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
+            for (var y = height / 2; y < height; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                var incertitude = 4 * params.shift;
+                if (sq(x - width / 4) + sq(y - 3 * height / 4) <= sq(params.radius)) {
+                    if (sq(x - width / 4) + sq(y - 3 * height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                    else {
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                }
+                compteur3++;
+            }
+        }
+        var compteur4 = 0;
+        for (var x = width / 2; x < width; x += params.rectThickness + params.rectMargin) {
+            for (var y = height / 2; y < height; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                var incertitude = 12 * params.shift;
+                if (sq(x - 3 * width / 4) + sq(y - 3 * height / 4) <= sq(params.radius)) {
+                    if (sq(x - 3 * width / 4) + sq(y - 3 * height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                    else {
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                }
+                compteur4++;
+            }
         }
     }
-    var compteur2 = 0;
-    for (var x = width / 2; x < width; x += params.rectThickness + params.rectMargin) {
-        for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin) {
-            var valeurAlea = 0;
-            var incertitude = params.shift;
-            if (sq(x - 3 * width / 4) + sq(y - height / 4) <= sq(params.radius)) {
-                if (sq(x - 3 * width / 4) + sq(y - height / 4 + params.radius) <= sq(params.radius)) {
-                    valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
-                    if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+    if (params.randomMode_1classic_2gaussian == 2) {
+        var compteur1 = 0;
+        for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
+            for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                if (sq(x - width / 4) + sq(y - height / 4) <= sq(params.radius)) {
+                    if (sq(x - width / 4) + sq(y - height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x, y, valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x, y, params.rectThickness, valeurAlea);
+                        }
                     }
                     else {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x, y, valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x, y, params.rectThickness, valeurAlea);
+                        }
                     }
                 }
-                else {
-                    valeurAlea = random(params.minLength, params.maxLength);
-                    if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
-                    }
-                    else {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
-                    }
-                }
+                compteur1++;
             }
-            compteur2++;
         }
-    }
-    var compteur3 = 0;
-    for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
-        for (var y = height / 2; y < height; y += params.rectThickness + params.rectMargin) {
-            var valeurAlea = 0;
-            var incertitude = 4 * params.shift;
-            if (sq(x - width / 4) + sq(y - 3 * height / 4) <= sq(params.radius)) {
-                if (sq(x - width / 4) + sq(y - 3 * height / 4 + params.radius) <= sq(params.radius)) {
-                    valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
-                    if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+        var compteur2 = 0;
+        for (var x = width / 2; x < width; x += params.rectThickness + params.rectMargin) {
+            for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                var incertitude = params.shift;
+                if (sq(x - 3 * width / 4) + sq(y - height / 4) <= sq(params.radius)) {
+                    if (sq(x - 3 * width / 4) + sq(y - height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
                     }
                     else {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
                     }
                 }
-                else {
-                    valeurAlea = random(params.minLength, params.maxLength);
-                    if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
-                    }
-                    else {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
-                    }
-                }
+                compteur2++;
             }
-            compteur3++;
         }
-    }
-    var compteur4 = 0;
-    for (var x = width / 2; x < width; x += params.rectThickness + params.rectMargin) {
-        for (var y = height / 2; y < height; y += params.rectThickness + params.rectMargin) {
-            var valeurAlea = 0;
-            var incertitude = 12 * params.shift;
-            if (sq(x - 3 * width / 4) + sq(y - 3 * height / 4) <= sq(params.radius)) {
-                if (sq(x - 3 * width / 4) + sq(y - 3 * height / 4 + params.radius) <= sq(params.radius)) {
-                    valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
-                    if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
+        var compteur3 = 0;
+        for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
+            for (var y = height / 2; y < height; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                var incertitude = 4 * params.shift;
+                if (sq(x - width / 4) + sq(y - 3 * height / 4) <= sq(params.radius)) {
+                    if (sq(x - width / 4) + sq(y - 3 * height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
                     }
                     else {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
                     }
                 }
-                else {
-                    valeurAlea = random(params.minLength, params.maxLength);
-                    if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
-                    }
-                    else {
-                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
-                    }
-                }
+                compteur3++;
             }
-            compteur4++;
+        }
+        var compteur4 = 0;
+        for (var x = width / 2; x < width; x += params.rectThickness + params.rectMargin) {
+            for (var y = height / 2; y < height; y += params.rectThickness + params.rectMargin) {
+                var valeurAlea = 0;
+                var incertitude = 12 * params.shift;
+                if (sq(x - 3 * width / 4) + sq(y - 3 * height / 4) <= sq(params.radius)) {
+                    if (sq(x - 3 * width / 4) + sq(y - 3 * height / 4 + params.radius) <= sq(params.radius)) {
+                        valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                    else {
+                        valeurAlea = random(params.minLength, params.maxLength);
+                        if (random() < 0.5 && x < 3 * width / 4 + params.radius - 1 / 6 * params.radius && x > 3 * width / 4 - params.radius + 1 / 6 * params.radius) {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), valeurAlea, params.rectThickness);
+                        }
+                        else {
+                            rect(x + randomGaussian(-incertitude, incertitude), y + randomGaussian(-incertitude, incertitude), params.rectThickness, valeurAlea);
+                        }
+                    }
+                }
+                compteur4++;
+            }
         }
     }
 }
