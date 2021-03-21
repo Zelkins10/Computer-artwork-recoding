@@ -13,6 +13,6 @@ Based on *Computer Composition With Lines* by A. Michael Noll.
 
 - **Repeat** these instructions for the next 3 circles, while gradually increasing intervals (or using other strategies such as adding and modifying Gaussian distribution)
 
-## Recoded artwork
+## Link to the recoded artwork
 
 https://zelkins10.github.io/Computer-artwork-recoding/
