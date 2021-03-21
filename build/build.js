@@ -81,24 +81,24 @@ function draw() {
     for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
         for (var y = height / 2; y < height; y += params.rectThickness + params.rectMargin) {
             var valeurAlea = 0;
-            var incertitude = random(-4 * params.shift, 4 * params.shift);
+            var incertitude = 4 * params.shift;
             if (sq(x - width / 4) + sq(y - 3 * height / 4) <= sq(params.radius)) {
                 if (sq(x - width / 4) + sq(y - 3 * height / 4 + params.radius) <= sq(params.radius)) {
                     valeurAlea = random(params.minLength, 2 / 3 * (params.maxLength));
                     if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + incertitude, y + incertitude, valeurAlea, params.rectThickness);
+                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
                     }
                     else {
-                        rect(x + incertitude, y + incertitude, params.rectThickness, valeurAlea);
+                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
                     }
                 }
                 else {
                     valeurAlea = random(params.minLength, params.maxLength);
                     if (random() < 0.5 && x < width / 4 + params.radius - 1 / 6 * params.radius && x > width / 4 - params.radius + 1 / 6 * params.radius) {
-                        rect(x + incertitude, y + incertitude, valeurAlea, params.rectThickness);
+                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), valeurAlea, params.rectThickness);
                     }
                     else {
-                        rect(x + incertitude, y + incertitude, params.rectThickness, valeurAlea);
+                        rect(x + random(-incertitude, incertitude), y + random(-incertitude, incertitude), params.rectThickness, valeurAlea);
                     }
                 }
             }
