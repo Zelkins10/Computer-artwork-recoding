@@ -1,6 +1,6 @@
 var gui = new dat.GUI();
 var params = {
-    radius: 150,
+    radius: 145,
     rectThickness: 3,
     maxLength: 8,
     minLength: 2,
