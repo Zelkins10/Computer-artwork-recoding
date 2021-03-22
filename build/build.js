@@ -6,26 +6,39 @@ var params = {
     minLength: 2,
     rectMargin: 4,
     shift: 1.5,
-    randomSeed: 1,
-    randomMode_1classic_2gaussian: 1,
+    random_and_noise_Seed: 1,
+    randomMode_1classic_2gaussian_3noise: 1,
     darkMode: false,
     Download_Image: function () { return save(); },
 };
-gui.add(params, "randomMode_1classic_2gaussian", 1, 2, 1);
+gui.add(params, "randomMode_1classic_2gaussian_3noise", 1, 3, 1);
 gui.add(params, "radius", 0, 200, 1);
 gui.add(params, "rectThickness", 1, 10, 1);
 gui.add(params, "minLength", 1, 20, 1);
 gui.add(params, "maxLength", 1, 20, 1);
 gui.add(params, "rectMargin", 1, 10, 1);
 gui.add(params, "shift", 0.5, 10, 0.5);
-gui.add(params, "randomSeed", 1, 100, 1);
+gui.add(params, "random_and_noise_Seed", 1, 100, 1);
 gui.add(params, "darkMode");
 gui.add(params, "Download_Image");
 function randomSpecial(incertitude) {
-    if (params.randomMode_1classic_2gaussian == 1) {
+    if (params.randomMode_1classic_2gaussian_3noise == 1) {
         return random(-incertitude, incertitude);
     }
     return randomGaussian(0, incertitude);
+}
+function offset(incertitude, coordinate) {
+    switch (params.randomMode_1classic_2gaussian_3noise) {
+        case 1:
+            return randomGaussian(0, incertitude);
+        case 2:
+            return random(-incertitude, incertitude);
+        case 3:
+            if (random() < 0.5) {
+                return -incertitude * noise(coordinate);
+            }
+            return incertitude * noise(coordinate);
+    }
 }
 function draw() {
     if (params.darkMode) {
@@ -38,7 +51,8 @@ function draw() {
         noStroke();
         fill('black');
     }
-    randomSeed(params.randomSeed);
+    randomSeed(params.random_and_noise_Seed);
+    noiseSeed(params.random_and_noise_Seed);
     var compteur1 = 0;
     for (var x = 0; x < width / 2; x += params.rectThickness + params.rectMargin) {
         for (var y = 0; y < height / 2; y += params.rectThickness + params.rectMargin) {

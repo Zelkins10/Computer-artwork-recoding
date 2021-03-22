@@ -10,21 +10,21 @@ const params = {
     minLength: 2,
     rectMargin: 4,
     shift: 1.5,
-    randomSeed: 1,
-    randomMode_1classic_2gaussian: 1,
+    random_and_noise_Seed: 1,
+    randomMode_1classic_2gaussian_3noise: 1,
     darkMode: false,
 
     Download_Image: () => save(),
 }
 
-gui.add(params, "randomMode_1classic_2gaussian", 1, 2, 1)
+gui.add(params, "randomMode_1classic_2gaussian_3noise", 1, 3, 1)
 gui.add(params, "radius", 0, 200, 1)
 gui.add(params, "rectThickness", 1, 10, 1)
 gui.add(params, "minLength", 1, 20, 1)
 gui.add(params, "maxLength", 1, 20, 1)
 gui.add(params, "rectMargin", 1, 10, 1)
 gui.add(params, "shift", 0.5, 10, 0.5)
-gui.add(params, "randomSeed", 1, 100, 1)
+gui.add(params, "random_and_noise_Seed", 1, 100, 1)
 gui.add(params, "darkMode")
 gui.add(params, "Download_Image")
 
@@ -34,10 +34,24 @@ gui.add(params, "Download_Image")
 
 
 function randomSpecial(incertitude){
-    if(params.randomMode_1classic_2gaussian == 1){
+    if(params.randomMode_1classic_2gaussian_3noise == 1){
         return random(-incertitude, incertitude)
     }
     return randomGaussian(0, incertitude)
+}
+
+function offset(incertitude, coordinate){
+    switch (params.randomMode_1classic_2gaussian_3noise){
+        case 1:
+            return randomGaussian(0, incertitude)
+        case 2:
+            return random(-incertitude, incertitude)
+        case 3:
+            if(random() < 0.5){
+                return -incertitude * noise(coordinate)
+            }
+            return incertitude * noise(coordinate)
+    }
 }
 
 function draw() {
@@ -53,7 +67,8 @@ function draw() {
         fill('black')
     }
 
-    randomSeed(params.randomSeed)
+    randomSeed(params.random_and_noise_Seed)
+    noiseSeed(params.random_and_noise_Seed)
 
         
     // Tracé des rectangles dans le disque d'en haut à gauche :
