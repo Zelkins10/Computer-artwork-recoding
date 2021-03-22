@@ -71,6 +71,7 @@ function draw() {
         rectMode(CORNER)
     }
 
+    // Initialisation des fonctions d'aléatoire
     randomSeed(params.random_and_noise_Seed)
     noiseSeed(params.random_and_noise_Seed)
 
