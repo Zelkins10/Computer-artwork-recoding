@@ -5,8 +5,8 @@ Based on [*Computer Composition With Lines* by A. Michael Noll](http://dada.comp
 ## Pseudo-code
 
 - **For** coordinate points inside the circle at the top left **do**
-  - **For** coordinate points inside the superimposed circle **do**
-    - **Draw** a rectangle of randomly chosen size in a small interval and randomly chosen orientation between vertical and horizontal
+  - **For** coordinate points inside the superimposed ~~circle~~ parabola **do**
+    - **Draw** a rectangle of randomly chosen size in a small interval and randomly chosen orientation between vertical and horizontal *, except for side rectangles which must be vertical*
     - **Move** to the next position
   - **Draw** a rectangle of randomly chosen size in a bigger interval and randomly chosen orientation between vertical and horizontal
   - **Move** to the next position
