@@ -37,7 +37,7 @@ function randomSpecial(incertitude){
     if(params.randomMode_1classic_2gaussian == 1){
         return random(-incertitude, incertitude)
     }
-    return randomGaussian(-incertitude, incertitude)
+    return randomGaussian(0, incertitude)
 }
 
 function draw() {
