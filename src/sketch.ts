@@ -12,7 +12,7 @@ const params = {
     shift: 1.5,
     randomSeed: 1,
     randomMode_1classic_2gaussian: 1,
-    darkMode: 0,
+    darkMode: false,
 
     Download_Image: () => save(),
 }
@@ -25,7 +25,7 @@ gui.add(params, "maxLength", 1, 20, 1)
 gui.add(params, "rectMargin", 1, 10, 1)
 gui.add(params, "shift", 0.5, 10, 0.5)
 gui.add(params, "randomSeed", 1, 100, 1)
-gui.add(params, "darkMode", 0, 1, 1)
+gui.add(params, "darkMode")
 gui.add(params, "Download_Image")
 
 // -------------------
@@ -42,15 +42,15 @@ function randomSpecial(incertitude){
 
 function draw() {
 
-    if(params.darkMode == 0){
-        background('white')
-        noStroke()
-        fill('black')
-    }
-    else{
+    if(params.darkMode){
         background(24, 26, 27)
         noStroke()
         fill('white')
+    }
+    else{
+        background('white')
+        noStroke()
+        fill('black')
     }
 
     randomSeed(params.randomSeed)
@@ -66,9 +66,8 @@ function draw() {
             let valeurAlea = 0
 
             if(sq(x-width/4) + sq(y-height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
-                if(sq(x-width/4) + sq(y-height/4+params.radius) <= sq(params.radius)){ // RECTANGLES DU CERCLE SUPERPOSÉ (SECONDAIRE)
+                if((-y+height/4)/params.radius > sq((x-width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
                     // ancien arg du if : sq(x-width/4) + sq(y-height/4+params.radius) <= sq(params.radius)
-                    // futur arg (en chantier) du if pour conditionner sur l'intérieur d'une parabole : y-height/4+params.radius > sq(x-width/4)
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
                     if(random() < 0.5 && x < width/4 + params.radius - 1/6*params.radius && x > width/4 - params.radius + 1/6*params.radius){ // 1 chance sur 2, sauf pour les côtés
@@ -106,7 +105,9 @@ function draw() {
             let incertitude = params.shift;
 
             if(sq(x-3*width/4) + sq(y-height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
-                if(sq(x-3*width/4) + sq(y-height/4+params.radius) <= sq(params.radius)){ // RECTANGLES DU CERCLE SUPERPOSÉ (SECONDAIRE)
+                if((-y+height/4)/params.radius > sq((x-3*width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
+                    // ancien arg du if : sq(x-3*width/4) + sq(y-height/4+params.radius) <= sq(params.radius)
+
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
                     if(random() < 0.5 && x < 3*width/4 + params.radius - 1/6*params.radius && x > 3*width/4 - params.radius + 1/6*params.radius){ // 1 chance sur 2, sauf pour les côtés
@@ -144,8 +145,9 @@ function draw() {
             let incertitude = 4*params.shift
 
             if(sq(x-width/4) + sq(y-3*height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
-                if(sq(x-width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)){ // RECTANGLES DU CERCLE SUPERPOSÉ (SECONDAIRE)
-                    
+                if((-y+3*height/4)/params.radius > sq((x-width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
+                    // ancien arg du if : sq(x-width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)
+
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
                     if(random() < 0.5 && x < width/4 + params.radius - 1/6*params.radius && x > width/4 - params.radius + 1/6*params.radius){ // 1 chance sur 2, sauf pour les côtés
@@ -183,8 +185,9 @@ function draw() {
             let incertitude = 12*params.shift
 
             if(sq(x-3*width/4) + sq(y-3*height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
-                if(sq(x-3*width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)){ // RECTANGLES DU CERCLE SUPERPOSÉ (SECONDAIRE)
-                    
+                if((-y+3*height/4)/params.radius > sq((x-3*width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
+                    // ancien arg du if : sq(x-3*width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)
+
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
                     if(random() < 0.5 && x < 3*width/4 + params.radius - 1/6*params.radius && x > 3*width/4 - params.radius + 1/6*params.radius){ // 1 chance sur 2, sauf pour les côtés
