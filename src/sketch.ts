@@ -36,15 +36,6 @@ gui.add(params, "Download_Image")
 //       Drawing
 // -------------------
 
-/*
-if(params.randomMode_1classic_2gaussian_3noise1D_4noise2D == 3){
-    function offset(incertitude, coordonnee){
-
-    }
-}
-else{
-*/
-
 function offset(incertitude, x, y){
     switch (params.randomMode_1classic_2gaussian_3noise1D_4noise2D){
         case 1:
@@ -58,7 +49,6 @@ function offset(incertitude, x, y){
             return map(noise(x*params.noiseScale, y*params.noiseScale), 0, 1, -incertitude, incertitude)
     }
 }
-//}
 
 function getX(x, y, incertitude){
     if(params.randomMode_1classic_2gaussian_3noise1D_4noise2D == 3){ 
@@ -111,7 +101,7 @@ function draw() {
 
             if(sq(x-width/4) + sq(y-height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
                 if((-y+height/4)/params.radius > sq((x-width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
-                    // ancien arg du if : sq(x-width/4) + sq(y-height/4+params.radius) <= sq(params.radius)
+                    // ancien arg du if (version superposition d'un cercle) : sq(x-width/4) + sq(y-height/4+params.radius) <= sq(params.radius)
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
                     if(random() < 0.5 && x < width/4 + params.radius - 1/6*params.radius && x > width/4 - params.radius + 1/6*params.radius){ // 1 chance sur 2, sauf pour les côtés
@@ -149,7 +139,7 @@ function draw() {
 
             if(sq(x-3*width/4) + sq(y-height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
                 if((-y+height/4)/params.radius > sq((x-3*width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
-                    // ancien arg du if : sq(x-3*width/4) + sq(y-height/4+params.radius) <= sq(params.radius)
+                    // ancien arg du if (version superposition d'un cercle) : sq(x-3*width/4) + sq(y-height/4+params.radius) <= sq(params.radius)
 
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
@@ -188,7 +178,7 @@ function draw() {
 
             if(sq(x-width/4) + sq(y-3*height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
                 if((-y+3*height/4)/params.radius > sq((x-width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
-                    // ancien arg du if : sq(x-width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)
+                    // ancien arg du if (version superposition d'un cercle) : sq(x-width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)
 
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
@@ -227,7 +217,7 @@ function draw() {
 
             if(sq(x-3*width/4) + sq(y-3*height/4) <= sq(params.radius)){ // si les coordonnées du point sont situées à l'intérieur du cercle principal
                 if((-y+3*height/4)/params.radius > sq((x-3*width/4)/params.radius)){ // RECTANGLES DANS LA PARABOLE SUPERPOSÉE
-                    // ancien arg du if : sq(x-3*width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)
+                    // ancien arg du if (version superposition d'un cercle) : sq(x-3*width/4) + sq(y-3*height/4+params.radius) <= sq(params.radius)
 
                     valeurAlea = random(params.minLength, 2/3*(params.maxLength));
 
@@ -255,9 +245,6 @@ function draw() {
     }
 
 }
-
-
-
 
 // -------------------
 //    Initialization
